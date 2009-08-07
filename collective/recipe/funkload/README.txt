@@ -56,7 +56,7 @@ Test that the script contains our url
     >>> import os
     >>> script = os.path.join(sample_buildout,'bin','funkload')
     >>> print open(script,'r').read()
-    #!...fl-run-test --url 127.0.0.1:8080
+    #!...TEST_URL = "127.0.0.1:8080"...
     
 
 
@@ -92,7 +92,7 @@ Test that the script contains our url
     >>> import os
     >>> script = os.path.join(sample_buildout,'bin','funkload')
     >>> print open(script,'r').read()
-    #!...fl-run-test --url 192.168.1.100:8080
+    #!...TEST_URL = "192.168.1.100:8080"...
 
 
 

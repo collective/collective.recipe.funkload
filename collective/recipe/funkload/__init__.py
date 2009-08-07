@@ -3,11 +3,7 @@ from zc.recipe.egg import Scripts
 import os
 import stat
 
-SCRIPT_TEMPLATE = """#!/bin/sh
-
-%(bin_dir)s/fl-run-test --url %(instance_address)s 
-
-"""
+from script_template import SCRIPT_TEMPLATE
 
 class Recipe(object):
     """zc.buildout recipe"""
@@ -24,7 +20,6 @@ class Recipe(object):
             del options_funkload['python']
         options_funkload['eggs'] = 'docutils\nfunkload'
         self._recipes.append(Scripts(buildout,name,options_funkload))
-            
         
         test_address = self.options.get('address')
         if not test_address:
@@ -35,6 +30,9 @@ class Recipe(object):
                 
         self.test_address = test_address
         self.filename = self.options.get('filename','funkload')
+        python = options.get('python', buildout['buildout']['python'])
+        self.executable = buildout[python]['executable']
+        
                 
     def install(self):
         """Installer"""
@@ -43,7 +41,7 @@ class Recipe(object):
             result.extend(recipe.install())
         
         bin_dir = self.buildout["buildout"]["bin-directory"]
-        script = SCRIPT_TEMPLATE % {'bin_dir':bin_dir,"instance_address":self.test_address}
+        script = SCRIPT_TEMPLATE % {'bin_directory':bin_dir,"test_address":self.test_address}
         script_path = os.path.join(bin_dir,self.filename)
 
         result.append(script_path)
@@ -51,6 +49,8 @@ class Recipe(object):
         fd.write(script)
         fd.close
         os.chmod(script_path,stat.S_IRWXU)
+        
+        
         print "Generated script '%s'." % (script_path)
         
         # Return files that were created by the recipe. The buildout
