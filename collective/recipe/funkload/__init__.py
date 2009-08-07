@@ -37,7 +37,6 @@ class Recipe(object):
             result.extend(recipe.install())
         
         bin_dir = self.buildout["buildout"]["bin-directory"]
-        self.logger.info("Adding script wrapper for %s" % filename)
         
         
         # Return files that were created by the recipe. The buildout
