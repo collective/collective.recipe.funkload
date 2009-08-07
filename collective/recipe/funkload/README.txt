@@ -1,20 +1,6 @@
 Supported options
 =================
 
-The recipe supports the following options:
-
-.. Note to recipe author!
-   ----------------------
-   For each option the recipe uses you shoud include a description
-   about the purpose of the option, the format and semantics of the
-   values it accepts, whether it is mandatory or optional and what the
-   default value is if it is omitted.
-
-option1
-    Description for ``option1``...
-
-option2
-    Description for ``option2``...
 
 
 Example usage
@@ -37,25 +23,94 @@ Example usage
    Below is a skeleton doctest that you can start with when building
    your own tests.
 
-We'll start by creating a buildout that uses the recipe::
+Test with a url defined
 
     >>> write('buildout.cfg',
     ... """
     ... [buildout]
     ... parts = test1
-    ...
+    ... index = http://pypi.python.org/simple
     ... [test1]
     ... recipe = collective.recipe.funkload
-    ... option1 = %(foo)s
-    ... option2 = %(bar)s
-    ... """ % { 'foo' : 'value1', 'bar' : 'value2'})
+    ... address = 127.0.0.1:8080 
+    ... """)
+
 
 Running the buildout gives us::
 
     >>> print 'start', system(buildout) 
     start...
     Installing test1.
-    Unused options for test1: 'option2' 'option1'.
-    <BLANKLINE>
+    ...
+    Generated script '/sample-buildout/bin/fl-credential-ctl'.
+    Generated script '/sample-buildout/bin/fl-run-test'.
+    Generated script '/sample-buildout/bin/fl-record'.
+    Generated script '/sample-buildout/bin/fl-run-bench'.
+    Generated script '/sample-buildout/bin/fl-monitor-ctl'.
+    Generated script '/sample-buildout/bin/fl-install-demo'.
+    Generated script '/sample-buildout/bin/fl-build-report'.
+    Generated script '/sample-buildout/bin/funkload'.
+    
+Test that the script contains our url
 
+    >>> import os
+    >>> script = os.path.join(sample_buildout,'bin','funkload')
+    >>> print open(script,'r').read()
+    #!...fl-run-test --url 127.0.0.1:8080
+    
+
+
+Test without a url defined (it will automatically be taken from a section called instance)
+
+    >>> write('buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = test1
+    ... index = http://pypi.python.org/simple
+    ... [test1]
+    ... recipe = collective.recipe.funkload
+    ... [instance]
+    ... http-address = 192.168.1.100:8080
+    ... """)
+
+Running the buildout gives us:
+
+    >>> print 'start', system(buildout) 
+    start...
+    Installing test1.
+    Generated script '/sample-buildout/bin/fl-credential-ctl'.
+    Generated script '/sample-buildout/bin/fl-run-test'.
+    Generated script '/sample-buildout/bin/fl-record'.
+    Generated script '/sample-buildout/bin/fl-run-bench'.
+    Generated script '/sample-buildout/bin/fl-monitor-ctl'.
+    Generated script '/sample-buildout/bin/fl-install-demo'.
+    Generated script '/sample-buildout/bin/fl-build-report'.
+    Generated script '/sample-buildout/bin/funkload'.
+
+Test that the script contains our url
+
+    >>> import os
+    >>> script = os.path.join(sample_buildout,'bin','funkload')
+    >>> print open(script,'r').read()
+    #!...fl-run-test --url 192.168.1.100:8080
+
+
+
+Test without a url defined (it will automatically be taken from a section called instance)
+
+    >>> write('buildout.cfg',
+    ... """
+    ... [buildout]
+    ... parts = test1
+    ... index = http://pypi.python.org/simple
+    ... [test1]
+    ... recipe = collective.recipe.funkload
+    ... """)
+
+Running the buildout gives us:
+
+    >>> print 'start', system(buildout) 
+    start...
+    
+    ...You must specify an address to test...
 

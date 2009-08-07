@@ -61,7 +61,6 @@ setup(name='collective.recipe.funkload',
                         'zc.buildout',
                         'funkload',
                         'zc.recipe.egg',
-                        'z3c.recipe.egg'
                         ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),

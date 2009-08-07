@@ -51,13 +51,13 @@ class Recipe(object):
         fd.write(script)
         fd.close
         os.chmod(script_path,stat.S_IRWXU)
-
+        print "Generated script '%s'." % (script_path)
         
         # Return files that were created by the recipe. The buildout
         # will remove all returned files upon reinstall.
         return tuple(result)
 
-    def update(self):
-        """Updater"""
-        for recipe in self._recipes:
-            recipe.update()
+ #   def update(self):
+ #       """Updater"""
+ #       for recipe in self._recipes:
+ #           recipe.update()
