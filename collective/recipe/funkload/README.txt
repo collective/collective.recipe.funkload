@@ -38,9 +38,8 @@ Test with a url defined
 
 Running the buildout gives us::
 
-    >>> print 'start', system(buildout) 
-    start...
-    Installing test1.
+    >>> print 'start\n', system(buildout) 
+    start
     ...
     Generated script '/sample-buildout/bin/fl-credential-ctl'.
     Generated script '/sample-buildout/bin/fl-run-test'.
@@ -75,9 +74,9 @@ Test without a url defined (it will automatically be taken from a section called
 
 Running the buildout gives us:
 
-    >>> print 'start', system(buildout) 
-    start...
-    Installing test1.
+    >>> print 'start\n', system(buildout) 
+    start
+    ...
     Generated script '/sample-buildout/bin/fl-credential-ctl'.
     Generated script '/sample-buildout/bin/fl-run-test'.
     Generated script '/sample-buildout/bin/fl-record'.
