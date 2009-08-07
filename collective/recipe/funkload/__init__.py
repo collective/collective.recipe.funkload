@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from zc.recipe.egg import Scripts
-from z3c.recipe.egg import Setup
+import os
+import stat
 
-SCRIPT_TEMPLATE = """"""
+SCRIPT_TEMPLATE = """#!/bin/sh
+
+%(bin_dir)s/fl-run-test --url %(instance_address)s 
+
+"""
 
 class Recipe(object):
     """zc.buildout recipe"""
@@ -28,6 +33,7 @@ class Recipe(object):
         if not test_address:
             raise KeyError, "You must specify an address to test"
                 
+        self.test_address = test_address
         self.filename = self.options.get('filename','funkload')
                 
     def install(self):
@@ -37,7 +43,15 @@ class Recipe(object):
             result.extend(recipe.install())
         
         bin_dir = self.buildout["buildout"]["bin-directory"]
-        
+        script = SCRIPT_TEMPLATE % {'bin_dir':bin_dir,"instance_address":self.test_address}
+        script_path = os.path.join(bin_dir,self.filename)
+
+        result.append(script_path)
+        fd = open(script_path,'w')
+        fd.write(script)
+        fd.close
+        os.chmod(script_path,stat.S_IRWXU)
+
         
         # Return files that were created by the recipe. The buildout
         # will remove all returned files upon reinstall.
