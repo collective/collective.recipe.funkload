@@ -19,7 +19,6 @@ class TestRunner(object):
 
         options_funkload = {'eggs':'funkload\ncollective.funkload\ncollective.recipe.funkload',
                             'scripts':'funkload',
-                            'initialization':"import os;os.chdir('%s')" % (self.location),
                             'arguments':'url="%s",buildout_dir="%s",report_destination="%s",data_destination="%s"' % (self.test_url,self.buildout['buildout'].get('directory'),self.report_destination,self.location)}
 
         if 'python' in options:
