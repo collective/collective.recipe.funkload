@@ -34,6 +34,8 @@ long_description = (
 entry_point = 'collective.recipe.funkload:Recipe'
 entry_points = {"zc.buildout": ["default = %s" % entry_point]}
 
+
+
 tests_require=['zope.testing', 'zc.buildout']
 
 setup(name='collective.recipe.funkload',
@@ -65,5 +67,8 @@ setup(name='collective.recipe.funkload',
       tests_require=tests_require,
       extras_require=dict(tests=tests_require),
       test_suite = 'collective.recipe.funkload.tests.test_docs.test_suite',
-      entry_points=entry_points,
+      entry_points={
+           'console_scripts': ['funkload = collective.recipe.funkload.dispatcher:main'],
+           'zc.buildout': ['default = collective.recipe.funkload:TestRunner'],
+           },
       )

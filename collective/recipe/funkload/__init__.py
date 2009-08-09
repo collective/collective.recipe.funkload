@@ -10,16 +10,17 @@ class TestRunner(object):
 
         self.test_url = self.options.get('url')
         if not self.test_url:
-            raise KeyError, "You must specify an url to test"
+            raise KeyError, "You must specify an address to test"
 
-        default_location = os.path.join(self.buildout['buildout'].get('directory'),'var','funkload')
+        default_location = os.path.join(self.buildout['buildout'].get('directory'),'var','funkload','data')
+        default_report_destination = os.path.join(self.buildout['buildout'].get('directory'),'var','funkload','reports')
         self.location = self.options.get('location',default_location)
+        self.report_destination = self.options.get('report_destination',default_report_destination)
 
-
-        options_funkload = {'eggs':'funkload\ncollective.funkload',
+        options_funkload = {'eggs':'funkload\ncollective.funkload\ncollective.recipe.funkload',
                             'scripts':'funkload',
                             'initialization':"import os;os.chdir('%s')" % (self.location),
-                            'arguments':'url="%s",buildout_dir="%s"' % (self.test_url,self.buildout['buildout'].get('directory'))}
+                            'arguments':'url="%s",buildout_dir="%s",report_destination="%s",data_destination="%s"' % (self.test_url,self.buildout['buildout'].get('directory'),self.report_destination,self.location)}
 
         if 'python' in options:
             options_funkload.update({'python':options['python']})
