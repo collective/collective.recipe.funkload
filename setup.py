@@ -30,7 +30,8 @@ tests_require=['zope.testing', 'zc.buildout']
 
 setup(name='collective.recipe.funkload',
       version=version,
-      description="",
+      description="Makes installing funkload, running tests and generating "
+        "reports a 'no-brainer'",
       long_description=long_description,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
