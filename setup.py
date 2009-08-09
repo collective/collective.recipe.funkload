@@ -9,10 +9,22 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 version = '0.1'
-
-long_description = ""    
-
-
+long_description = (
+    open(os.path.join("src", "collective", "recipe", "funkload",
+        "README.txt")).read()
+    + '\n' +
+    'Change history\n'
+    '**************\n'
+    + '\n' +
+    open('CHANGES.txt').read()
+    + '\n' +
+    'Contributors\n'
+    '**************\n'
+    + '\n' +
+    open('CONTRIBUTORS.txt').read()
+    + '\n' +
+    'Download\n'
+    '********\n')
 
 tests_require=['zope.testing', 'zc.buildout']
 
@@ -28,10 +40,10 @@ setup(name='collective.recipe.funkload',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: Zope Public License',
         ],
-      keywords='',
-      author='',
-      author_email='',
-      url='',
+      keywords='funkload recipe',
+      author='Alan Hoey',
+      author_email='alan.hoey@teamrubber.com',
+      url='http://pypi.python.org/pypi/collective.recipe.funkload',
       license='ZPL',
       packages=find_packages('src', exclude=['ez_setup']),
       package_dir = {'':'src'},

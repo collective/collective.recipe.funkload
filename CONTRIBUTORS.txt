@@ -1,2 +1,3 @@
-"", Author
-
+Alan Hoey, [evilbungle]
+Tom Lazar, [tomster]
+Sasha Vincic, [sashav]
