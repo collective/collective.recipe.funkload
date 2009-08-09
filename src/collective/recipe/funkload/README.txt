@@ -1,29 +1,16 @@
-Supported options
-=================
 
+collective.recipe.funkload is a nice and simple recipe that allows easy running of funkload tests and generation of reports on them,
+running ./bin/funkload bench will run all the funkload tests within the buildout and then autogenerate the html reports for them.
+Report generation requires gnuplot, currently there is no way to cleanly disable this.  The reports and supporting xml is stored in
+the path pointed to by location in your part (defaults to ./var/funkload).  You may also have the reports generated in a different directory
+using report_destination.
 
 
 Example usage
 =============
 
-.. Note to recipe author!
-   ----------------------
-   zc.buildout provides a nice testing environment which makes it
-   relatively easy to write doctests that both demonstrate the use of
-   the recipe and test it.
-   You can find examples of recipe doctests from the PyPI, e.g.
-   
-     http://pypi.python.org/pypi/zc.recipe.egg
-
-   The PyPI page for zc.buildout contains documentation about the test
-   environment.
-
-     http://pypi.python.org/pypi/zc.buildout#testing-support
-
-   Below is a skeleton doctest that you can start with when building
-   your own tests.
-
-Test with a url defined
+In order for this to work its magic you need to set a base URL for the tests to be run on,
+your buildout part will look something like this
 
     >>> write('buildout.cfg',
     ... """
@@ -36,14 +23,15 @@ Test with a url defined
     ... """)
 
 
-Running the buildout gives us::
+Running that buildout gives us the funkload script:
 
     >>> print 'start\n', system(buildout) 
     start
     ...
     Generated script '/sample-buildout/bin/funkload'.
-    
-Test that the script contains our url
+
+
+Which passes the host through to the subcommand handler in the recipe:
 
     >>> import os
     >>> script = os.path.join(sample_buildout,'bin','funkload')
@@ -51,8 +39,7 @@ Test that the script contains our url
     #!...url="127.0.0.1:8080"...
     
 
-
-Test without a url defined will fail.
+If you don't specify a URL buildout will fail:
 
     >>> write('buildout.cfg',
     ... """
@@ -62,8 +49,6 @@ Test without a url defined will fail.
     ... [test1]
     ... recipe = collective.funkload
     ... """)
-
-Running the buildout gives us:
 
     >>> print 'start\n', system(buildout) 
     start
