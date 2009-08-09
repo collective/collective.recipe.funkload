@@ -9,50 +9,48 @@ using report_destination.
 Example usage
 =============
 
-In order for this to work its magic you need to set a base URL for the tests to be run on,
-your buildout part will look something like this
+In order for this to work its magic you need to set a base URL for the tests
+to be run on, your buildout part will look something like this:
 
-    >>> write('buildout.cfg',
-    ... """
-    ... [buildout]
-    ... parts = test1
-    ... index = http://pypi.python.org/simple
-    ... [test1]
-    ... recipe = collective.funkload
-    ... url = 127.0.0.1:8080 
-    ... """)
+  >>> write('buildout.cfg',
+  ... """
+  ... [buildout]
+  ... parts = test1
+  ... index = http://pypi.python.org/simple
+  ... [test1]
+  ... recipe = collective.funkload
+  ... url = 127.0.0.1:8080 
+  ... """)
 
 
-Running that buildout gives us the funkload script:
+Running that buildout gives us the ``funkload`` script:
 
-    >>> print 'start\n', system(buildout) 
-    start
-    ...
-    Generated script '/sample-buildout/bin/funkload'.
-
+  >>> print 'start\n', system(buildout) 
+  start
+  ...
+  Generated script '/sample-buildout/bin/funkload'.
 
 Which passes the host through to the subcommand handler in the recipe:
 
-    >>> import os
-    >>> script = os.path.join(sample_buildout,'bin','funkload')
-    >>> print open(script,'r').read()
-    #!...url="127.0.0.1:8080"...
-    
+  >>> import os
+  >>> script = os.path.join(sample_buildout,'bin','funkload')
+  >>> print open(script,'r').read()
+  #!...url="127.0.0.1:8080"...
 
 If you don't specify a URL buildout will fail:
 
-    >>> write('buildout.cfg',
-    ... """
-    ... [buildout]
-    ... parts = test1
-    ... index = http://pypi.python.org/simple
-    ... [test1]
-    ... recipe = collective.funkload
-    ... """)
+  >>> write('buildout.cfg',
+  ... """
+  ... [buildout]
+  ... parts = test1
+  ... index = http://pypi.python.org/simple
+  ... [test1]
+  ... recipe = collective.funkload
+  ... """)
 
-    >>> print 'start\n', system(buildout) 
-    start
-    ...
-    KeyError: 'You must specify an url to test'
+  >>> print 'start\n', system(buildout) 
+  start
+  ...
+  KeyError: 'You must specify an url to test'
 
 
