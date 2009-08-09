@@ -1,5 +1,8 @@
-1.0 (xxxx-xx-xx)
-----------------
+0.1
+---
 
-- Created recipe with ZopeSkel
-  [""]
+- Initial release
+- Added funkload script
+- Added automatic report generation
+
+  
