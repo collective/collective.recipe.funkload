@@ -17,7 +17,13 @@ class TestRunner(object):
         self.location = self.options.get('location',default_location)
         self.report_destination = self.options.get('report_destination',default_report_destination)
 
-        options_funkload = {'eggs':'funkload\ncollective.funkload\ncollective.recipe.funkload',
+        eggs = self.options.get('eggs', 'funkload\ncollective.funkload\ncollective.recipe.funkload' )
+        required_eggs = ['funkload', 'collective.funkload', 'collective.recipe.funkload']
+        for egg in required_eggs:
+            if egg not in eggs:
+                eggs = '\n'.join([eggs, egg])
+
+        options_funkload = {'eggs': eggs,
                             'scripts':'funkload',
                             'arguments':'url="%s",buildout_dir="%s",report_destination="%s",data_destination="%s"' % (self.test_url,self.buildout['buildout'].get('directory'),self.report_destination,self.location)}
 
