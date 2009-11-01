@@ -1,3 +1,8 @@
+0.2 - 2009-11-01
+----------------
+
+- enable funkload bench to run tests in released eggs [toutpt]
+
 0.1 - 2009-08-09
 ----------------
 
