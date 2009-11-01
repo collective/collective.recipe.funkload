@@ -34,7 +34,11 @@ class FunkloadWrapper(object):
         self._clean_args = [self._args[0]] + self._args[2:]
 
         if action and action in actions:
-            test_path = ['--test-path=%s' % (path) for path in sys.path if path.startswith(self._dir) and path != self._dir]
+            if len(self._args[2:]): #if argument don t filter path
+                test_path = ['--test-path=%s' % (path) for path in sys.path]
+            else:
+                test_path = ['--test-path=%s' % (path) for path in sys.path if path.startswith(self._dir) and path != self._dir]
+            
             self._injected_args = [self._args[0]] + test_path + ['--url=%s' % self._url] +  self._args[2:]
             action = getattr(self,action)
             action()
