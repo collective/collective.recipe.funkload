@@ -1,17 +1,21 @@
 import os
 import sys
 import collective.funkload.bench
+import collective.funkload.recorder
 import funkload.ReportBuilder
+import funkload.Recorder
 import datetime
-
 
 class FunkloadWrapper(object):
     
-    def __init__(self,url,buildout_dir,data_dir,report_dir):
+    def __init__(self,url,buildout_dir,data_dir,report_dir,record_dir,record_name,record_port):
         self._url = url
         self._dir = buildout_dir
         self._report_dir = report_dir
         self._data_dir = data_dir
+        self._record_dir = record_dir
+        self._record_name = record_name
+        self._record_port = record_port
     
     def _usage(self):
         """ Print usage """
@@ -102,9 +106,26 @@ class FunkloadWrapper(object):
                 funkload.ReportBuilder.main()
             except:
                 print "Report generation failed for %s" % (f)
+
+
+    def record(self):
+        """Launch a TCPWatch proxy and record activities, then output a 
+        FunkLoad script or generates a FunkLoad unit test if test_name is specified."""
+        dir_name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        base_dir = os.path.join(self._record_dir,self._record_name)
+        target = os.path.join(base_dir, dir_name)
+        os.makedirs(target)
+        os.chdir(target)
+        
+        #Building parameters:
+        user_argv = self._args[2:]
+        recipe_argv = [self._record_name, '-p %s' % self._record_port]
+        argv = user_argv or recipe_argv
+        
+        recorder = collective.funkload.recorder.RecorderProgram(argv=argv)
+        recorder.run()
+
             
-
-def main(url,buildout_dir,report_destination,data_destination):
-    wrapper = FunkloadWrapper(url,buildout_dir,data_destination,report_destination)
+def main(url,buildout_dir,report_destination,data_destination,record_output,record_test_name,record_proxy_port):
+    wrapper = FunkloadWrapper(url,buildout_dir,data_destination,report_destination,record_output,record_test_name,record_proxy_port)
     wrapper._dispatch()
-

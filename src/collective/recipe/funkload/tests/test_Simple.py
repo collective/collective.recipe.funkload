@@ -17,11 +17,6 @@ class Simple(testcase.FLTestCase):
         self.logd("setUp")
         self.server_url = self.conf_get('main', 'url')
 
-    def test_simple(self):
-        server_url = self.server_url
-        self.get("http://teamrubber.com/",
-            description="visit Team Rubber")
-
     def test_complex(self):
         server_url = self.server_url
         self.get("http://plone.org/",

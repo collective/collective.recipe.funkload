@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '0.2'
+version = '0.3'
 long_description = (
     open(os.path.join("src", "collective", "recipe", "funkload",
         "README.txt")).read()
@@ -53,7 +53,7 @@ setup(name='collective.recipe.funkload',
       zip_safe=False,
       install_requires=['setuptools',
                         'zc.buildout',
-                        'funkload',
+                        'collective.funkload',
                         'zc.recipe.egg',
                         ],
       tests_require=tests_require,

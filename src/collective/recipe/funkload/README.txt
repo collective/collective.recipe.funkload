@@ -18,10 +18,9 @@ to be run on, your buildout part will look something like this:
   ... parts = test1
   ... index = http://pypi.python.org/simple
   ... [test1]
-  ... recipe = collective.funkload
+  ... recipe = collective.recipe.funkload
   ... url = 127.0.0.1:8080 
   ... """)
-
 
 Running that buildout gives us the ``funkload`` script:
 
@@ -45,12 +44,25 @@ If you don't specify a URL buildout will fail:
   ... parts = test1
   ... index = http://pypi.python.org/simple
   ... [test1]
-  ... recipe = collective.funkload
+  ... recipe = collective.recipe.funkload
   ... """)
 
   >>> print 'start\n', system(buildout) 
   start
   ...
-  KeyError: 'You must specify an url to test'
+  KeyError: 'You must specify an address to test'
 
 
+Record
+------
+
+Since version 0.3 you can now use record to create funkload tests even faster::
+
+    >>> print system('bin/funkload')
+    Usage:
+    bench:  Launch a FunkLoad unit test as load test. 
+    record: Launch a TCPWatch proxy and record activities, then output a 
+            FunkLoad script or generates a FunkLoad unit test if test_name is specified.
+    report:  Generate a report from the most recent bench result 
+    test:  Launch a FunkLoad unit test. 
+    <BLANKLINE> 
