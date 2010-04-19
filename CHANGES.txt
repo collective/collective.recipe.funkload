@@ -1,3 +1,12 @@
+HISTORY
+=======
+
+0.3.1 - 2010-04-19
+------------------
+
+- add example usage for PloneFLTestCase [amleczko]
+
+
 0.3 - 2009-11-23
 ----------------
 
