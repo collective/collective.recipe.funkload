@@ -1,1 +1,0 @@
-See ``src/collective/recipe/funkload/README.txt``

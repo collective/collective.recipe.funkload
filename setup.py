@@ -10,13 +10,12 @@ def read(*rnames):
 
 version = '0.3.1'
 long_description = (
-    open(os.path.join("src", "collective", "recipe", "funkload",
-        "README.txt")).read()
+    open("README.rst").read()
     + '\n' +
     'Change history\n'
     '**************\n'
     + '\n' +
-    open('CHANGES.txt').read()
+    open('CHANGES.rst').read()
     + '\n' +
     'Contributors\n'
     '**************\n'
