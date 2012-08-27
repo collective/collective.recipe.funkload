@@ -1,3 +1,5 @@
+:repository: https://github.com/collective/collective.recipe.funkload
+
 
 collective.recipe.funkload is a nice and simple recipe that allows easy running of funkload tests and generation of reports on them,
 running ./bin/funkload bench will run all the funkload tests within the buildout and then autogenerate the html reports for them.
